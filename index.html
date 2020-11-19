@@ -8,7 +8,7 @@
     <script type="text/javascript">
         $(function () {
             $("#bouton_arret").click(function () {
-                $.getJSON(url = 'twitch-bot/_get_message', {
+                $.getJSON(url = '/_get_message', {
                     param: $("#bouton_arret").text()
                 }, function (data) {
                     $("#afficheTest").text(data.result);
@@ -18,7 +18,7 @@
         });
         $(function () {
             $("#bouton_démarer").click(function () {
-                $.getJSON(url = 'twitch-bot/_get_message', {
+                $.getJSON(url = '/_get_message', {
                     param: $("#bouton_démarer").text()
                 }, function (data) {
                     $("#afficheTest").text(data.result);

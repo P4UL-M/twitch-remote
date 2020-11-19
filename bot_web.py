@@ -72,6 +72,8 @@ def add_numbers():
 
 # sur requete AJAX _get_message on renvoie le texte
 # je suis la réponse ajax du serveur à + le paramètre transmis
+
+
 @app.route('/_get_message')
 def get_message():
     param = request.args.get('param', 'pas de param', type=str)
@@ -108,6 +110,6 @@ def get_message():
 if __name__ == '__main__':
     # lancement de l'app
     app.run(
-        host="paul.famille-mairesse.fr",
-        port=int("8080")
+        host="localhost",
+        port=int("82")
     )
