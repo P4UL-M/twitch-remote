@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Test 1</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            $("#bouton_arret").click(function () {
+                $.getJSON(url = '/_get_message', {
+                    param: $("#bouton_arret").text()
+                }, function (data) {
+                    $("#afficheTest").text(data.result);
+                });
+                return false;
+            });
+        });
+        $(function () {
+            $("#bouton_démarer").click(function () {
+                $.getJSON(url = '/_get_message', {
+                    param: $("#bouton_démarer").text()
+                }, function (data) {
+                    $("#afficheTest").text(data.result);
+                });
+                return false;
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <button id="bouton_démarer" style='left:50px;height:50px;width:200px;'>demarer</button>
+    <button id="bouton_arret" style='left:50px;height:50px;width:200px;'>arret</button>
+    <span id="afficheTest" style='text-align: center;'>MESSAGEDUSERVEUR</span>
+</body>
+
+</html>
