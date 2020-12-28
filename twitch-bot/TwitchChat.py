@@ -5,10 +5,6 @@ import sys
 from decouple import config
 import TwitchRequest
 
-CHAT_TOKEN = 'oauth:vqc1xctdcuzy88rx7js0dhn5k3ds7w'
-USER = 'le_picard_fr'
-CHAT = 'le_picard_fr'
-
 
 class Bot():
     def __init__(self, user, chat, token):
