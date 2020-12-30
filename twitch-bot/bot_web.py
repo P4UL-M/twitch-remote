@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 import TwitchChat
+import TwitchRequest
 import threading
 import time
 from time import strftime
@@ -51,7 +52,7 @@ def get_message():
         # si t1 existe
         print("##### bot déjà lancé ! #####")
         return jsonify(result='bot déjà lancé !')
-    if param == 'arret':
+    elif param == 'arret':
         try:
             t1 = get_thread()
         except NameError:
@@ -63,6 +64,9 @@ def get_message():
         # suppresion de la variable maintenant inutile pour update les try, fait en global donc or du décorateur
         get_thread(delete=True)
         return jsonify(result='bot arrêté a ' + str(time.strftime("%H:%M:%S")))
+    elif param == 'pub':
+        TwitchRequest.myrequests.startpub()
+        return jsonify(result="Demande de pub lancé")
     else:
         return jsonify(result='message imcompris : ' + param)
 

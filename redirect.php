@@ -3,7 +3,7 @@
         $monfichier = fopen('twitch-bot/.env', 'r+');
         $content = fgets($monfichier);
         $new = "\nUSER_TOKEN = " . $_GET['access_token'] . " \nTOKEN_TYPE = " . $_GET['token_type'];
-        fseek($monfichier, 113);
+        fseek($monfichier, 154);
         fputs($monfichier, $new);
         fclose($monfichier);
         header('Location: https://paul.famille-mairesse.fr/Le_Picard_Fr/remote.html');

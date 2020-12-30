@@ -26,12 +26,23 @@
                 return false;
             });
         });
+        $(function () {
+            $("#bouton_pub").click(function () {
+                $.getJSON(url = '/Le_Picard_Fr/twitch-bot/_get_message', {
+                    param: $("#bouton_pub").text()
+                }, function (data) {
+                    $("#afficheTest").text(data.result);
+                });
+                return false;
+            });
+        });
     </script>
 </head>
 
 <body>
     <button id="bouton_démarer" style='left:50px;height:50px;width:200px;'>demarer</button>
     <button id="bouton_arret" style='left:50px;height:50px;width:200px;'>arret</button>
+    <button id="bouton_pub" style='left:50px;height:50px;width:200px;'>pub</button>
     <span id="afficheTest" style='text-align: center;'>MESSAGEDUSERVEUR</span>
 </body>
 
