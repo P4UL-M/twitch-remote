@@ -40,6 +40,10 @@ def get_thread(New=False, delete=False):
 @app.route('/Le_Picard_Fr/twitch-bot/_get_message')
 def get_message():
     param = request.args.get('param', 'pas de param', type=str)
+    token = request.args.get('token', type=str)
+    token_type = request.args.get('token' type=str)[
+        0].upper() + request.args.get('token' type=str)[1:]
+    TwitchChat.myChat.USER_TOKEN = token_type + ' ' + token
     print("##### appel https:  " + param + " #####")
     if param == "demarer":
         try:
@@ -65,7 +69,7 @@ def get_message():
         get_thread(delete=True)
         return jsonify(result='bot arrêté a ' + str(time.strftime("%H:%M:%S")))
     elif param == 'pub':
-        TwitchRequest.myrequests.startpub()
+        TwitchRequest.myrequests.startpub(token)
         return jsonify(result="Demande de pub lancé")
     else:
         return jsonify(result='message imcompris : ' + param)

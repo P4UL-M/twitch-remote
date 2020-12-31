@@ -5,21 +5,26 @@ from decouple import config
 
 
 class request():
-    def __init__(self, token, bot_id, token_type):
-        self.token = token_type[0].upper() + token_type[1:] + " " + token
+    def __init__(self, bot_id):
         self.id = bot_id
-        self. headers = {'Client-Id': self.id,
-                         'Authorization': self.token}
 
-    def get_viewers(self):
+    def get_viewers(self, token):
+        self.headers = {
+            'Client-Id': self.id,
+            'Authorization': token
+        }
+        # requête des utilisateurs
         r = requests.get(
             'https://tmi.twitch.tv/group/user/le_picard_fr/chatters', headers=self.headers)
         rep = r.json()["chatters"]["viewers"] + [i for i in r.json()["chatters"]["moderators"]
                                                  if i != 'streamlabs']
         return rep
 
-    def startpub(self):
-
+    def startpub(self, token):
+        self.headers = {
+            'Client-Id': self.id,
+            'Authorization': 'Bearer ' + token
+        }
         # demande de pub
         mydata = {
             'broadcaster_id': "222142107",
@@ -27,9 +32,8 @@ class request():
         }
         r = requests.post(
             'https://api.twitch.tv/helix/channels/commercial', data=mydata, headers=self.headers)
-        print(r.url)
         print(r.json())
 
 
-myrequests = request(config('USER_TOKEN'), config(
-    'USER_ID'), config('TOKEN_TYPE'))
+myrequests = request(config(
+    'USER_ID'))

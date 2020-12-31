@@ -7,10 +7,11 @@ import TwitchRequest
 
 
 class Bot():
-    def __init__(self, user, chat, token):
+    def __init__(self, user=config('BOT_NAME'), chat=config('BOT_NAME'), token=config('BOT_TOKKEN')):
         self.USER = user
         self.CHAT = chat
         self.TOKEN = token
+        self.USER_TOKEN = None
 
     def start(self):
         asyncio.run(self.run())
@@ -22,7 +23,6 @@ class Bot():
         uri = "wss://irc-ws.chat.twitch.tv:443"
         async with websockets.connect(uri) as websocket:
             self.socket = websocket
-
             # connection au serveur
             await websocket.send(f'PASS {self.TOKEN}')
             await websocket.send(f'NICK {self.USER}')
@@ -69,7 +69,8 @@ class Bot():
                         print(f"Envoie de la réponse à !discord ...")
                     elif '!viewers' in str(reponse):
                         message = "les viewers actuels du chat sont : "
-                        message += ", ".join(TwitchRequest.myrequests.get_viewers())
+                        message += ", ".join(
+                            TwitchRequest.myrequests.get_viewers(self.USER_TOKEN))
                         await websocket.send(f'PRIVMSG #{self.CHAT} :{message}')
                         print(f"Envoie de la réponse à !viewers ...")
                     elif any(i for i in expresion if i in reponse_ajust):
@@ -92,4 +93,4 @@ class Bot():
         print(f"Déconnexion du chat ...")
 
 
-myChat = Bot(config('BOT_NAME'), config('BOT_NAME'), config('BOT_TOKKEN'))
+myChat = Bot()
