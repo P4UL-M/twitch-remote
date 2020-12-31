@@ -6,10 +6,16 @@
     <title>Test 1</title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript">
+        if (document.location.hash == null) {
+            document.location.href = "https://paul.famille-mairesse.fr/Le_Picard_Fr/"
+        }
+        hashData = JSON.parse('{"' + document.location.hash.substr(1).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}')
         $(function () {
             $("#bouton_arret").click(function () {
                 $.getJSON(url = '/Le_Picard_Fr/twitch-bot/_get_message', {
-                    param: $("#bouton_arret").text()
+                    param: $("#bouton_arret").text(),
+                    token: hashData['access_token'],
+                    token_type: hashData['token_type']
                 }, function (data) {
                     $("#afficheTest").text(data.result);
                 });
@@ -19,7 +25,9 @@
         $(function () {
             $("#bouton_démarer").click(function () {
                 $.getJSON(url = '/Le_Picard_Fr/twitch-bot/_get_message', {
-                    param: $("#bouton_démarer").text()
+                    param: $("#bouton_démarer").text(),
+                    token: hashData['access_token'],
+                    token_type: hashData['token_type']
                 }, function (data) {
                     $("#afficheTest").text(data.result);
                 });
@@ -29,7 +37,9 @@
         $(function () {
             $("#bouton_pub").click(function () {
                 $.getJSON(url = '/Le_Picard_Fr/twitch-bot/_get_message', {
-                    param: $("#bouton_pub").text()
+                    param: $("#bouton_pub").text(),
+                    token: hashData['access_token'],
+                    token_type: hashData['token_type']
                 }, function (data) {
                     $("#afficheTest").text(data.result);
                 });
