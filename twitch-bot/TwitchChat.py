@@ -6,6 +6,10 @@ import TwitchRequest
 import commands
 
 
+class Object():
+    pass
+
+
 class Bot():
     def __init__(self, user=config('BOT_NAME'), chat=config('BOT_NAME'), token=config('BOT_TOKKEN')):
         self.USER = user
@@ -63,7 +67,11 @@ class Bot():
                             asked = sorted(
                                 list(set(Keys) & set(reponse_ajust)))
                             if len(asked) != 0:
-                                await commands.AllCommands[key](self.socket, self.CHAT, reponse)
+                                ctx = Object()
+                                ctx._ws = self.socket
+                                ctx.chat = self.CHAT
+                                ctx.content = reponse
+                                await commands.AllCommands[key](ctx)
 
     async def tearsdown(self):
         # demande de désabonnement

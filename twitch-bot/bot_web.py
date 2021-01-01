@@ -1,6 +1,9 @@
 from flask import Flask, render_template, request, jsonify
+# script du bot de chat
 import TwitchChat
+# script du bot d'appel d'api
 import TwitchRequest
+# threading pour actionen arrière plan
 import threading
 import time
 import logging
@@ -20,7 +23,7 @@ log.disabled = True
 app.logger.disabled = True
 
 
-# fonction permettant de recuperer la variable globale/d'en créer une nouvelle/de la supprimer
+# fonction permettant de recuperer la variable globale/d'en créer une nouvelle/de la supprimer (en dehors de l'autre car variable globale non dispo avec le décorateur)
 def get_thread(New=False, delete=False):
     global t1
     if New:
@@ -37,12 +40,15 @@ def get_thread(New=False, delete=False):
 # sur requete AJAX _get_message
 @app.route('/Le_Picard_Fr/twitch-bot/_get_message')
 def get_message():
+    # récupération des paramètre
     param = request.args.get('param', 'pas de param', type=str)
     token = request.args.get('token', type=str)
     token_type = request.args.get('token', type=str)[
         0].upper() + request.args.get('token', type=str)[1:]
+    # envoie du tokken au script dépendant
     TwitchChat.myChat.USER_TOKEN = token_type + ' ' + token
     print("##### appel https:  " + param + " #####")
+    # action en fonction du paramètre
     if param == "demarer":
         try:
             t1 = get_thread()
