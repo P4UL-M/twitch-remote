@@ -55,7 +55,15 @@ class Bot():
                         return
                     # si commande detectée
                     else:
-                        await commands.run(self.socket, reponse)
+                        reponse_ajust = reponse.replace(':', '').replace(
+                            '\r', '').replace('\n', '').split(" ")
+                        for key in commands.AllCommands.keys():
+                            Keys = tuple(key.split(" ")) if type(
+                                key) is str else key
+                            asked = sorted(
+                                list(set(Keys) & set(reponse_ajust)))
+                            if len(asked) != 0:
+                                await commands.AllCommands[key](self.socket, self.CHAT, reponse)
 
     async def tearsdown(self):
         # demande de désabonnement

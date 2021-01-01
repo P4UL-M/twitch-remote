@@ -8,16 +8,12 @@ class request():
     def __init__(self, bot_id):
         self.id = bot_id
 
-    def get_viewers(self, token):
-        self.headers = {
-            'Client-Id': self.id,
-            'Authorization': token
-        }
+    def get_viewers(self):
         # requête des utilisateurs
         r = requests.get(
-            'https://tmi.twitch.tv/group/user/le_picard_fr/chatters', headers=self.headers)
+            'https://tmi.twitch.tv/group/user/le_picard_fr/chatters')
         rep = r.json()["chatters"]["viewers"] + [i for i in r.json()["chatters"]["moderators"]
-                                                 if i != 'streamlabs']
+                                                 if i != 'streamlabs'] + r.json()["chatters"]["broadcaster"]
         return rep
 
     def startpub(self, token):
