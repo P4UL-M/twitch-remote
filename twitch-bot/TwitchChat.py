@@ -6,8 +6,16 @@ import TwitchRequest
 import commands
 
 
-class Object():
-    pass
+class Context():
+    def __init__(self, socket, chat, content):
+        self._ws = socket
+        self.chat = chat
+        self.content = content
+        self.viewers = TwitchRequest.myrequests.get_viewers()
+
+    async def send(self, message):
+        print("test")
+        await self._ws.send(f'PRIVMSG #{self.chat} :{message}')
 
 
 class Bot():
@@ -67,10 +75,7 @@ class Bot():
                             asked = sorted(
                                 list(set(Keys) & set(reponse_ajust)))
                             if len(asked) != 0:
-                                ctx = Object()
-                                ctx._ws = self.socket
-                                ctx.chat = self.CHAT
-                                ctx.content = reponse
+                                ctx = Context(self.socket, self.CHAT, reponse)
                                 await commands.AllCommands[key](ctx)
 
     async def tearsdown(self):

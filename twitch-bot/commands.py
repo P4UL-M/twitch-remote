@@ -1,7 +1,6 @@
-import TwitchRequest
 
 """             DOC - Ajout des commandes de bot ici :
-    ajout de la commande via nouvelle fonction, ensuite il faut la 
+    ajout de la commande via nouvelle fonction, ensuite il faut la
     référencer avec son mot de détection dans le dictionaire en bas.
     la commande peut avoir plusieur mot clef
     la fonction est obligé de demandé le paramètre ctx
@@ -9,18 +8,18 @@ import TwitchRequest
 
 
 async def helpCommands(ctx):
-    await ctx._ws.send(f'PRIVMSG  #{ctx.chat} :Bienvenu sur le bot de la chaîne, les commandes disponnibles sont !discord(affiche le lien vers le discord de la chaîne), !viewers(affiche les viewers actuels)')
+    await ctx.send('Bienvenu sur le bot de la chaîne, les commandes disponnibles sont !discord(affiche le lien vers le discord de la chaîne), !viewers(affiche les viewers actuels)')
     print(f"Envoie de la réponse à !help ...")
 
 
 async def discord(ctx):
-    await ctx._ws.send(f'PRIVMSG #{ctx.chat} :https://discord.gg/jBYp2s6')
+    await ctx.send('https://discord.gg/jBYp2s6')
     print(f"Envoie de la réponse à !discord ...")
 
 
 async def viewers(ctx):
-    viewers = ", ".join(TwitchRequest.myrequests.get_viewers())
-    await ctx._ws.send(f'PRIVMSG #{ctx.chat} :Les viewers actuels du chat sont : {viewers}.')
+    viewers = ", ".join(ctx.viewers)
+    await ctx.send(f'Les viewers actuels du chat sont : {viewers}.')
     print(f"Envoie de la réponse à !viewers ...")
 
 
@@ -30,7 +29,7 @@ async def bienvenu(ctx):
     while ctx.content[i] != "!":
         pseudo += ctx.content[i]
         i += 1
-    await ctx._ws.send(f'PRIVMSG #{ctx.chat} :salut 👋 {pseudo}!')
+    await ctx.send(f'salut 👋 {pseudo}!')
     print(f"Souhaite la bienvenu au nouveau viewer ...")
 
 AllCommands = {
