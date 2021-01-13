@@ -6,7 +6,8 @@
     <title>Test 1</title>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
     <script type="text/javascript">
-        if (document.location.hash == null) {
+        test = (RegExp("access_token").test(document.location.hash) && RegExp("scope").test(document.location.hash) && RegExp("token_type").test(document.location.hash))
+        if (!(test)) {
             document.location.href = "https://paul.famille-mairesse.fr/Le_Picard_Fr/"
         }
         hashData = JSON.parse('{"' + document.location.hash.substr(1).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}')
